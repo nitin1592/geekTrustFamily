@@ -22,7 +22,7 @@ public class Constants {
 	}
 	
 	static class Message {
-		public static final String NOT_YET_IMPLEMENTED = "NOT YET IMPLEMENTED";
+//		public static final String NOT_YET_IMPLEMENTED = "NOT YET IMPLEMENTED";
 		public static final String PERSON_NOT_FOUND = "PERSON_NOT_FOUND";
 		public static final String PROVIDE_VALID_RELATION = "PROVIDE VALID RELATION";
 		public static final String CHILD_ADDITION_FAILED = "CHILD_ADDITION_FAILED";

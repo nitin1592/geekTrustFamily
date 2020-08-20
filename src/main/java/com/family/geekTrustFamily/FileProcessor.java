@@ -4,6 +4,7 @@ import static com.family.geekTrustFamily.Constants.Message.INVALID_COMMAND;
 import static com.family.geekTrustFamily.Constants.Operation.ADD_CHILD;
 import static com.family.geekTrustFamily.Constants.Operation.ADD_FAMILY_HEAD;
 import static com.family.geekTrustFamily.Constants.Operation.ADD_SPOUSE;
+import static com.family.geekTrustFamily.Constants.Operation.GET_RELATIONSHIP;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -23,6 +24,7 @@ public class FileProcessor {
 				else
 					processInput(familyTree, line);
 			}
+			sc.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found");
 		}
@@ -32,26 +34,39 @@ public class FileProcessor {
 		String[] arr = line.split(",");
 		
 		switch (arr[0]) {
-		case ADD_FAMILY_HEAD:
+			case ADD_FAMILY_HEAD:
+				familyTree.addFamilyHead(arr[1], Gender.FEMALE);
+				break;
 			
-			break;
-		
-		case ADD_CHILD:
+			case ADD_CHILD:
+				familyTree.addChild(arr[1], arr[2], arr[3]);
+				break;
 			
-			break;
-		
-		case ADD_SPOUSE:
-			
-			break;
-
-		default:
-			System.out.println(INVALID_COMMAND);
-			break;
+			case ADD_SPOUSE:
+				familyTree.addSpouse(arr[1], arr[2], arr[3]);
+				break;
+	
+			default:
+				System.out.println(INVALID_COMMAND);
+				break;
 		}
 	}
 	
 	private void processInput(FamilyTree familyTree, String line) {
+		String[] arr = line.split(" ");
+		String result = "";
 		
+		switch (arr[0]) {
+			case ADD_CHILD:
+				result = familyTree.addChild(arr[1], arr[2], arr[3]);
+				break;
+			case GET_RELATIONSHIP:
+				result = familyTree.getRelations(arr[1], arr[2]);
+				break;
+			default:
+				result = INVALID_COMMAND;
+		}
+		System.out.println(result);
 	}
 
 }
