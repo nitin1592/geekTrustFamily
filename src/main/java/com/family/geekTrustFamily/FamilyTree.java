@@ -25,23 +25,25 @@ public class FamilyTree {
 		switch (relation) {
 			case PATERNAL_UNCLE:
 				if (member.mother != null)
-					result = member.mother.spouse.searchAuntsAndUncles(Gender.MALE);
+					result = member.mother.spouse.searchSiblings(Gender.MALE);
 				break;
 			case MATERNAL_UNCLE:
 				if (member.mother != null)
-					result = member.mother.searchAuntsAndUncles(Gender.MALE);
+					result = member.mother.searchSiblings(Gender.MALE);
 				break;
 			case PATERNAL_AUNT:
 				if (member.mother != null)
-					result = member.mother.spouse.searchAuntsAndUncles(Gender.FEMALE);
+					result = member.mother.spouse.searchSiblings(Gender.FEMALE);
 				break;
 			case MATERNAL_AUNT:
 				if (member.mother != null)
-					result = member.mother.searchAuntsAndUncles(Gender.FEMALE);
+					result = member.mother.searchSiblings(Gender.FEMALE);
 				break;
 			case SISTER_IN_LAW:
+				result = searchInLaws(member, Gender.FEMALE);
 				break;
 			case BROTHER_IN_LAW:
+				result = searchInLaws(member, Gender.MALE);
 				break;
 			case SON :
 				result = member.findChildren(Gender.MALE);
@@ -50,14 +52,33 @@ public class FamilyTree {
 				result = member.findChildren(Gender.FEMALE);
 				break;
 			case SIBLINGS:
-				if (member.mother != null)
-					result = member.mother.findAllChildren(member);
+				if (member.mother != null) {
+					result = member.mother.findChildren(Gender.FEMALE);
+					result += member.mother.findChildren(Gender.MALE);
+				}
 				break;
 			default:
 				result = PROVIDE_VALID_RELATION;
 		}
 		
 		return ("".equals(result)) ? NONE : result;
+	}
+	
+	public String searchInLaws (FamilyMember member, Gender gender) {
+		StringBuffer result = new StringBuffer();
+		if (member.spouse != null)
+			result.append(member.spouse.searchSiblings(gender));
+		
+		if (member.mother != null) {
+			Gender targetGender = (gender==Gender.FEMALE) ? Gender.MALE : Gender.FEMALE;
+			ArrayList<FamilyMember> list = member.mother.findChildrenList(targetGender);
+			
+			for (FamilyMember fm : list) {
+				if ((!fm.name.equals(member.name)) && fm.spouse!=null)
+					result.append(fm.name).append(" ");
+			}
+		}
+		return result.toString().trim();
 	}
 	
 	public void addFamilyHead(String name, Gender gender) {

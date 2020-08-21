@@ -20,10 +20,17 @@ public class FamilyMember {
 		this.children = new ArrayList<FamilyMember>();
 	}
 	
-	public String searchAuntsAndUncles(Gender gender) {
+	
+	
+	public String searchSiblings(Gender gender) {
 		StringBuffer result = new StringBuffer();
 		
-		
+		if (this.mother != null) {
+			for (FamilyMember sibling : this.mother.children) {
+				if ((!sibling.name.equals(this.name)) && sibling.gender==gender)	
+					result.append(sibling.name).append(" ");
+			}
+		}
 		
 		return result.toString().trim();
 	}
@@ -31,22 +38,29 @@ public class FamilyMember {
 	public String findChildren(Gender gender) {
 		StringBuffer result = new StringBuffer();
 		
-		for (FamilyMember child : this.children) {
-			if (child.gender == gender)
-				result.append(child.name).append(" ");
-		}
-		
+		ArrayList<FamilyMember> list = findChildrenList(gender);
+		for (FamilyMember fm : list)
+			result.append(fm.name).append(" ");
 		return result.toString().trim();
 	}
 	
-	public String findAllChildren(FamilyMember member) {
-		StringBuffer result = new StringBuffer();
-		
+	public ArrayList<FamilyMember> findChildrenList(Gender gender) {
+		ArrayList<FamilyMember> result = new ArrayList<>();
 		for (FamilyMember child : this.children) {
-			if (!(child.name.equals(member.name)))
-				result.append(child.name).append(" ");
+			if (child.gender == gender)
+				result.add(child);
 		}
-		
-		return result.toString().trim();
+		return result;
 	}
+	
+//	public String findAllChildren(FamilyMember member) {
+//		StringBuffer result = new StringBuffer();
+//		
+//		for (FamilyMember child : this.children) {
+//			if (!(child.name.equals(member.name)))
+//				result.append(child.name).append(" ");
+//		}
+//		
+//		return result.toString().trim();
+//	}
 }
