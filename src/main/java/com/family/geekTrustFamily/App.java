@@ -10,8 +10,8 @@ public class App
     {
     	Solution solution = new Solution();
     	FamilyTree familyTree = new FamilyTree();
-    	String initialFile = "";
-    	String inputFile = "";
+    	String initialFile = "/Users/nitinbansal/eclipse-workspace/geekTrustFamily/src/main/java/com/family/geekTrustFamily/initInput.txt";
+    	String inputFile = "/Users/nitinbansal/eclipse-workspace/geekTrustFamily/src/main/java/com/family/geekTrustFamily/inputFile.txt";
     	
     	try {
 			solution.initiateFileProcesser(familyTree, initialFile, true);
