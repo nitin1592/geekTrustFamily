@@ -49,7 +49,7 @@ public class FamilyMember {
 	}
 	
 	public ArrayList<FamilyMember> findChildrenList(Gender gender) {
-		ArrayList<FamilyMember> result = new ArrayList<>();
+		ArrayList<FamilyMember> result = new ArrayList();
 		for (FamilyMember child : this.children) {
 			if (child.gender == gender)
 				result.add(child);

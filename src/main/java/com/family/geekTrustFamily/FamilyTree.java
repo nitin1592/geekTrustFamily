@@ -1,9 +1,9 @@
 package com.family.geekTrustFamily;
 
-import java.util.ArrayList;
-import java.util.List;
 import static com.family.geekTrustFamily.Constants.Message.*;
 import static com.family.geekTrustFamily.Constants.Relationship.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FamilyTree {
 	private FamilyMember familyHead;
