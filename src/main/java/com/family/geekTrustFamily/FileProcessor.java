@@ -13,26 +13,28 @@ import java.util.Scanner;
 public class FileProcessor {
 	
 	public void processInputFile(File file, FamilyTree familyTree, boolean isInitialFile) {
-		
+		Scanner sc = null;
 		try {
-			Scanner sc = new Scanner(file);
-			while (sc.hasNext()) {
-				String line = sc.next();
+			sc = new Scanner(file);
+			while (sc.hasNextLine()) {
+				String line = sc.nextLine();
 				
 				if (isInitialFile)
 					processInitialInput(familyTree, line);
 				else
 					processInput(familyTree, line);
 			}
-			sc.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found");
+		}
+		finally {
+			sc.close();
 		}
 	}
 	
 	private void processInitialInput(FamilyTree familyTree, String line) {
 		String[] arr = line.split(",");
-		
+
 		switch (arr[0]) {
 			case ADD_FAMILY_HEAD:
 				familyTree.addFamilyHead(arr[1], Gender.FEMALE);

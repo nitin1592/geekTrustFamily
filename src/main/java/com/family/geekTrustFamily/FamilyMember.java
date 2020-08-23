@@ -38,9 +38,13 @@ public class FamilyMember {
 	public String findChildren(Gender gender) {
 		StringBuffer result = new StringBuffer();
 		
-		ArrayList<FamilyMember> list = findChildrenList(gender);
-		for (FamilyMember fm : list)
-			result.append(fm.name).append(" ");
+		if (this.spouse != null) {
+			ArrayList<FamilyMember> list = (this.gender==Gender.FEMALE) ? this.children : this.spouse.children;
+			
+			for (FamilyMember member : list)
+				result.append(member.name).append(" ");
+		}
+		
 		return result.toString().trim();
 	}
 	

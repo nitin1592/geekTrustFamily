@@ -14,8 +14,8 @@ public class FamilyTree {
 		FamilyMember member = searchMember(familyHead, memberName);
 		if (member == null)
 			result = PERSON_NOT_FOUND;
-		
-		result = getAllRelations(member, relation);
+		else
+			result = getAllRelations(member, relation);
 		return result;
 	}
 	
@@ -53,8 +53,10 @@ public class FamilyTree {
 				break;
 			case SIBLINGS:
 				if (member.mother != null) {
-					result = member.mother.findChildren(Gender.FEMALE);
-					result += member.mother.findChildren(Gender.MALE);
+					result = member.searchSiblings(Gender.FEMALE);
+					if (result.length() > 0)
+						result += " ";
+					result += member.searchSiblings(Gender.MALE);
 				}
 				break;
 			default:
@@ -75,7 +77,7 @@ public class FamilyTree {
 			
 			for (FamilyMember fm : list) {
 				if ((!fm.name.equals(member.name)) && fm.spouse!=null)
-					result.append(fm.name).append(" ");
+					result.append(fm.spouse.name).append(" ");
 			}
 		}
 		return result.toString().trim();
